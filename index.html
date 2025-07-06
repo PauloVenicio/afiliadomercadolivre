@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PAULO CARVALHO - AFILIADO MERCADO LIVRE - CAXIAS MA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #fefce8;
+      color: #1f2937;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: #1e3a8a;
+      margin: 0;
+    }
+
+    header p {
+      color: #374151;
+      margin: 5px 0 0;
+    }
+
+    .card {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      background-color: #facc15;
+      color: #000;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+      flex: 1 1 auto;
+    }
+
+    button:hover {
+      background-color: #eab308;
+    }
+
+    .result {
+      background: #f3f4f6;
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      white-space: pre-line;
+    }
+
+    .produtos {
+      margin-top: 30px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    }
+
+    .produtos h3 {
+      margin-bottom: 12px;
+      color: #1e3a8a;
+    }
+
+    .produto-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px dashed #ccc;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .produto-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .produto-info {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.2rem;
+      }
+
+      input {
+        font-size: 0.95rem;
+        padding: 12px;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .produto-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .produto-item img {
+        width: 100%;
+        height: auto;
+      }
+
+      .produto-info {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="img/1712155869572-desktophome-mainslider.webp" alt="Logo Mercado Livre">
+    <h1>PAULO CARVALHO - AFILIADO MERCADO LIVRE - CAXIAS MA</h1>
+    <p>Divulgação inteligente dos seus links de afiliado</p>
+  </header>
+
+  <div class="card">
+    <div class="input-group">
+      <input type="text" id="tituloProduto" placeholder="Título do Produto">
+    </div>
+    <div class="input-group">
+      <input type="text" id="linkAfiliado" placeholder="Link de afiliado do Mercado Livre">
+    </div>
+    <div class="input-group">
+      <input type="text" id="idProduto" placeholder="ID do produto (ex: MLB123456789)">
+    </div>
+    <div class="input-group">
+      <input type="text" id="cupomDesconto" placeholder="Cupom de desconto (opcional)">
+    </div>
+
+    <div class="btn-group">
+      <button onclick="gerarTexto()">🚀 Gerar texto</button>
+      <button onclick="copiarTexto()">📋 Copiar texto</button>
+      <button onclick="compartilharWhatsApp()">💬 WhatsApp</button>
+    </div>
+
+    <div id="sugestao" class="result" style="display: none;"></div>
+  </div>
+
+  <div class="produtos" id="produtosLista" style="display: none;">
+    <h3>📌 Últimos produtos anunciados:</h3>
+    <div id="listaProdutos"></div>
+  </div>
+
+  <script>
+    function gerarTexto() {
+      const titulo = document.getElementById('tituloProduto').value.trim();
+      const link = document.getElementById('linkAfiliado').value.trim();
+      const idProduto = document.getElementById('idProduto').value.trim().toUpperCase();
+      const cupom = document.getElementById('cupomDesconto').value.trim();
+      const sugestao = document.getElementById('sugestao');
+
+      if (!titulo || !link || !idProduto) {
+        alert('Preencha o título, link e ID do produto.');
+        return;
+      }
+
+      const imagem = `https://http2.mlstatic.com/D_NQ_NP_${idProduto}-O.webp`;
+
+      let texto = `Confira este produto incrível que encontrei no Mercado Livre! 🛒\n\n${titulo}\n👉 ${link}\n\n`;
+
+      texto += cupom
+        ? `🎟️ Cupom: ${cupom}\n🟢 Aproveita esse cupom, ele acabará rápido!`
+        : `🟡 No momento não tem cupom.`;
+
+      sugestao.style.display = 'block';
+      sugestao.textContent = texto;
+
+      salvarProduto(titulo, link, imagem);
+    }
+
+    function copiarTexto() {
+      const texto = document.getElementById('sugestao').textContent;
+      navigator.clipboard.writeText(texto).then(() => {
+        alert('Texto copiado com sucesso!');
+      });
+    }
+
+    function compartilharWhatsApp() {
+      const texto = document.getElementById('sugestao').textContent;
+      const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank');
+    }
+
+    function salvarProduto(titulo, link, imagem) {
+      const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+      produtos.unshift({ titulo, link, imagem });
+      localStorage.setItem('produtos', JSON.stringify(produtos.slice(0, 5)));
+      mostrarProdutos();
+    }
+
+    function mostrarProdutos() {
+      const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+      const lista = document.getElementById('listaProdutos');
+      const box = document.getElementById('produtosLista');
+
+      if (!produtos.length) {
+        box.style.display = 'none';
+        return;
+      }
+
+      lista.innerHTML = '';
+      produtos.forEach(p => {
+        const item = document.createElement('div');
+        item.className = 'produto-item';
+
+        const imagem = document.createElement('img');
+        imagem.src = p.imagem || 'https://via.placeholder.com/100?text=Produto';
+
+        const info = document.createElement('div');
+        info.className = 'produto-info';
+        info.innerHTML = `<strong>${p.titulo}</strong><br><a href="${p.link}" target="_blank">${p.link}</a>`;
+
+        item.appendChild(imagem);
+        item.appendChild(info);
+        lista.appendChild(item);
+      });
+
+      box.style.display = 'block';
+    }
+
+    mostrarProdutos();
+
+    // 👉 Preenche ID automaticamente ao colar o link
+    document.getElementById('linkAfiliado').addEventListener('blur', function () {
+      const link = this.value;
+      const idExtraido = link.match(/MLB\d{9}/i);
+      if (idExtraido) {
+        document.getElementById('idProduto').value = idExtraido[0];
+      }
+    });
+  </script>
+</body>
+</html>
