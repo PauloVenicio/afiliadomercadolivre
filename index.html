@@ -187,7 +187,7 @@
     <div class="btn-group">
       <button onclick="gerarTexto()">🚀 Gerar texto</button>
       <button onclick="copiarTexto()">📋 Copiar texto</button>
-      <button onclick="compartilharWhatsApp()">💬 WhatsApp</button>
+      <button onclick="enviarParaGrupo()">💬 WhatsApp</button>
     </div>
 
     <div id="sugestao" class="result" style="display: none;"></div>
@@ -213,11 +213,16 @@
 
       const imagem = `https://http2.mlstatic.com/D_NQ_NP_${idProduto}-O.webp`;
 
-      let texto = `Confira este produto incrível que encontrei no Mercado Livre! 🛒\n\n${titulo}\n👉 ${link}\n\n`;
+      // 🔄 Texto agora mostra o cupom primeiro e o produto depois
+      let texto = "Confira este produto incrível que encontrei no Mercado Livre! 🛒\n\n";
 
-      texto += cupom
-        ? `🎟️ Cupom: ${cupom}\n🟢 Aproveita esse cupom, ele acabará rápido!`
-        : `🟡 No momento não tem cupom.`;
+      if (cupom) {
+        texto += `🎟️ Cupom: ${cupom}\n🟢 Aproveita esse cupom, ele acabará rápido!\n\n`;
+      } else {
+        texto += `🟡 No momento não tem cupom.\n\n`;
+      }
+
+      texto += `${titulo}\n👉 ${link}`;
 
       sugestao.style.display = 'block';
       sugestao.textContent = texto;
@@ -232,10 +237,17 @@
       });
     }
 
-    function compartilharWhatsApp() {
+    function enviarParaGrupo() {
       const texto = document.getElementById('sugestao').textContent;
-      const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
-      window.open(url, '_blank');
+      if (!texto) {
+        alert('Gere o texto antes de compartilhar no WhatsApp!');
+        return;
+      }
+
+      navigator.clipboard.writeText(texto).then(() => {
+        alert('Texto copiado! Agora cole no grupo do WhatsApp.');
+        window.open("https://chat.whatsapp.com/LW63AlLmDFtKdZDWFJUGBn", "_blank");
+      });
     }
 
     function salvarProduto(titulo, link, imagem) {
@@ -277,7 +289,6 @@
 
     mostrarProdutos();
 
-    // 👉 Preenche ID automaticamente ao colar o link
     document.getElementById('linkAfiliado').addEventListener('blur', function () {
       const link = this.value;
       const idExtraido = link.match(/MLB\d{9}/i);
