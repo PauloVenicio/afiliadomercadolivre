@@ -1,301 +1,195 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PAULO CARVALHO - AFILIADO MERCADO LIVRE - CAXIAS MA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: #fefce8;
-      color: #1f2937;
-      padding: 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    header img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 10px;
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-      color: #1e3a8a;
-      margin: 0;
-    }
-
-    header p {
-      color: #374151;
-      margin: 5px 0 0;
-    }
-
-    .card {
-      max-width: 700px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-
-    .input-group {
-      margin-bottom: 16px;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    button {
-      background-color: #facc15;
-      color: #000;
-      padding: 12px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s;
-      flex: 1 1 auto;
-    }
-
-    button:hover {
-      background-color: #eab308;
-    }
-
-    .result {
-      background: #f3f4f6;
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 10px;
-      white-space: pre-line;
-    }
-
-    .produtos {
-      margin-top: 30px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-    }
-
-    .produtos h3 {
-      margin-bottom: 12px;
-      color: #1e3a8a;
-    }
-
-    .produto-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border-bottom: 1px dashed #ccc;
-      padding-bottom: 12px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-
-    .produto-item img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    }
-
-    .produto-info {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.2rem;
-      }
-
-      input {
-        font-size: 0.95rem;
-        padding: 12px;
-      }
-
-      .btn-group {
-        flex-direction: column;
-      }
-
-      button {
-        width: 100%;
-      }
-
-      .produto-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .produto-item img {
-        width: 100%;
-        height: auto;
-      }
-
-      .produto-info {
-        width: 100%;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PAULO CARVALHO - AFILIADO MERCADO LIVRE - CAXIAS MA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { margin:0; background:#fefce8; color:#1f2937; padding:20px; }
+header { text-align:center; margin-bottom:30px; }
+header img { max-width:100%; height:auto; margin-bottom:10px; border-radius:10px; }
+header h1 { font-size:1.8rem; color:#1e3a8a; margin:0; }
+header p { color:#374151; margin:5px 0 0; }
+.card { max-width:700px; margin:0 auto; background:#fff; border-radius:16px; padding:24px; box-shadow:0 10px 20px rgba(0,0,0,0.1); }
+.input-group { margin-bottom:16px; }
+input { width:100%; padding:14px; border:1px solid #d1d5db; border-radius:8px; font-size:1rem; }
+.btn-group { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+button { background-color:#facc15; color:#000; padding:12px 20px; font-size:1rem; border:none; border-radius:8px; cursor:pointer; font-weight:600; transition:background 0.3s; flex:1 1 auto; }
+button:hover { background-color:#eab308; }
+.result { background:#f3f4f6; margin-top:20px; padding:16px; border-radius:10px; white-space:pre-line; border-left:5px solid #1e3a8a; opacity:0; transform:translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.result.show { opacity:1; transform:translateY(0); }
+.preco-atual { color:#16a34a; font-weight:700; }
+.preco-anterior { color:#dc2626; font-weight:700; }
+.desconto { color:#f97316; font-weight:700; }
+.mini-preview { display:flex; align-items:center; gap:12px; margin-bottom:12px; border-bottom:1px dashed #ccc; padding-bottom:12px; text-decoration:none; color:inherit; opacity:0; transform:translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.mini-preview.show { opacity:1; transform:translateY(0); }
+.mini-preview img { width:100px; height:100px; object-fit:cover; border-radius:8px; border:1px solid #ddd; }
+.mini-preview-title { font-weight:700; color:#1e3a8a; flex:1; word-wrap:break-word; }
+.produtos { margin-top:30px; background:#fff; border-radius:12px; padding:20px; box-shadow:0 6px 15px rgba(0,0,0,0.05); }
+.produtos h3 { margin-bottom:12px; color:#1e3a8a; }
+.contador-produtos { font-size:1.1rem; color:#374151; margin-bottom:10px; font-weight:700; display:flex; align-items:center; gap:5px; }
+.flip-number { display:inline-block; width:20px; height:28px; perspective:400px; }
+.flip-number-inner { display:block; width:100%; height:100%; background:#f3f4f6; text-align:center; border-radius:4px; transform-style:preserve-3d; transition: transform 0.6s ease-in-out; line-height:28px; font-weight:700; }
+.flip-number-front, .flip-number-back { position:absolute; width:100%; height:100%; backface-visibility:hidden; top:0; left:0; }
+.flip-number-back { transform:rotateX(180deg); }
+.produto-item { display:flex; align-items:center; gap:15px; border-bottom:1px dashed #ccc; padding-bottom:12px; margin-bottom:12px; flex-wrap:wrap; opacity:0; transform:translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.produto-item.show { opacity:1; transform:translateY(0); }
+.produto-item img { width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid #ddd; }
+.produto-info { flex:1; min-width:200px; }
+@media (max-width:480px){
+  header h1{font-size:1.2rem;}
+  input{font-size:0.95rem; padding:12px;}
+  .btn-group{flex-direction:column;}
+  button{width:100%;}
+  .produto-item,.mini-preview{flex-direction:column; align-items:flex-start;}
+  .produto-item img,.mini-preview img{width:100%; height:auto;}
+  .produto-info,.mini-preview-title{width:100%;}
+}
+</style>
 </head>
 <body>
-  <header>
-    <img src="img/1712155869572-desktophome-mainslider.webp" alt="Logo Mercado Livre">
-    <h1>PAULO CARVALHO - AFILIADO MERCADO LIVRE - CAXIAS MA</h1>
-    <p>Divulgação inteligente dos seus links de afiliado</p>
-  </header>
+<header>
+  <img src="img/1712155869572-desktophome-mainslider.webp" alt="Logo Mercado Livre">
+  <h1>PAULO CARVALHO - AFILIADO MERCADO LIVRE - CAXIAS MA</h1>
+  <p>Divulgação inteligente dos seus links de afiliado</p>
+</header>
 
-  <div class="card">
-    <div class="input-group">
-      <input type="text" id="tituloProduto" placeholder="Título do Produto">
-    </div>
-    <div class="input-group">
-      <input type="text" id="linkAfiliado" placeholder="Link de afiliado do Mercado Livre">
-    </div>
-    <div class="input-group">
-      <input type="text" id="idProduto" placeholder="ID do produto (ex: MLB123456789)">
-    </div>
-    <div class="input-group">
-      <input type="text" id="cupomDesconto" placeholder="Cupom de desconto (opcional)">
-    </div>
+<div class="card">
+  <div class="input-group"><input type="text" id="tituloProduto" placeholder="Título do Produto"></div>
+  <div class="input-group"><input type="text" id="linkAfiliado" placeholder="Link de afiliado do Mercado Livre"></div>
+  <div class="input-group"><input type="text" id="idProduto" placeholder="ID do produto (ex: MLB123456789)"></div>
+  <div class="input-group"><input type="text" id="cupomDesconto" placeholder="Cupom de desconto (opcional)"></div>
+  <div class="input-group"><input type="number" id="precoAtual" placeholder="Preço atual (ex: 1899.90)"></div>
+  <div class="input-group"><input type="number" id="precoAnterior" placeholder="Preço anterior (opcional)"></div>
 
-    <div class="btn-group">
-      <button onclick="gerarTexto()">🚀 Gerar texto</button>
-      <button onclick="copiarTexto()">📋 Copiar texto</button>
-      <button onclick="enviarParaGrupo()">💬 WhatsApp</button>
-    </div>
-
-    <div id="sugestao" class="result" style="display: none;"></div>
+  <div class="btn-group">
+    <button onclick="gerarTexto()">🚀 Gerar texto</button>
+    <button onclick="copiarTexto()">📋 Copiar texto</button>
+    <button onclick="compartilharWhatsApp()">💬 WhatsApp</button>
   </div>
 
-  <div class="produtos" id="produtosLista" style="display: none;">
-    <h3>📌 Últimos produtos anunciados:</h3>
-    <div id="listaProdutos"></div>
-  </div>
+  <div id="sugestao" class="result" style="display:none;"></div>
+</div>
 
-  <script>
-    function gerarTexto() {
-      const titulo = document.getElementById('tituloProduto').value.trim();
-      const link = document.getElementById('linkAfiliado').value.trim();
-      const idProduto = document.getElementById('idProduto').value.trim().toUpperCase();
-      const cupom = document.getElementById('cupomDesconto').value.trim();
-      const sugestao = document.getElementById('sugestao');
+<div class="produtos" id="produtosLista" style="display:none;">
+  <div class="contador-produtos" id="contadorProdutos">Últimos produtos: <span id="flipContainer"></span></div>
+  <div id="listaProdutos"></div>
+</div>
 
-      if (!titulo || !link || !idProduto) {
-        alert('Preencha o título, link e ID do produto.');
-        return;
-      }
+<script>
+function gerarTexto() {
+  const titulo = document.getElementById('tituloProduto').value.trim();
+  const link = document.getElementById('linkAfiliado').value.trim();
+  const idProduto = document.getElementById('idProduto').value.trim().toUpperCase();
+  const cupom = document.getElementById('cupomDesconto').value.trim();
+  const precoAtual = parseFloat(document.getElementById('precoAtual').value);
+  const precoAnterior = parseFloat(document.getElementById('precoAnterior').value);
+  const sugestao = document.getElementById('sugestao');
 
-      const imagem = `https://http2.mlstatic.com/D_NQ_NP_${idProduto}-O.webp`;
+  if(!titulo || !link || !idProduto){ alert('Preencha o título, link e ID do produto.'); return; }
 
-      // 🔄 Texto agora mostra o cupom primeiro e o produto depois
-      let texto = "Confira este produto incrível que encontrei no Mercado Livre! 🛒\n\n";
+  const imagem = `https://http2.mlstatic.com/D_NQ_NP_${idProduto}-O.webp`;
 
-      if (cupom) {
-        texto += `🎟️ Cupom: ${cupom}\n🟢 Aproveita esse cupom, ele acabará rápido!\n\n`;
-      } else {
-        texto += `🟡 No momento não tem cupom.\n\n`;
-      }
-
-      texto += `${titulo}\n👉 ${link}`;
-
-      sugestao.style.display = 'block';
-      sugestao.textContent = texto;
-
-      salvarProduto(titulo, link, imagem);
+  let textoHTML = '';
+  textoHTML += `<a href="${link}" target="_blank" class="mini-preview"><img src="${imagem}" alt="${titulo}"><div class="mini-preview-title">${titulo}</div></a>`;
+  if(cupom){ textoHTML += `🎟️ Cupom: ${cupom}\n🟢 Aproveita esse cupom, ele acabará rápido!\n\n`; }
+  else{ textoHTML += `🟡 No momento não tem cupom.\n\n`; }
+  if(!isNaN(precoAtual) && precoAtual>0){
+    textoHTML += `💰 *Preço atual:* <span class="preco-atual">R$ ${precoAtual.toFixed(2).replace('.',',')}</span>\n`;
+    if(!isNaN(precoAnterior) && precoAnterior>precoAtual){
+      const economia = precoAnterior - precoAtual;
+      const descontoPercentual = (economia/precoAnterior)*100;
+      textoHTML += `📉 *Preço anterior:* <span class="preco-anterior">R$ ${precoAnterior.toFixed(2).replace('.',',')}</span>\n`;
+      textoHTML += `🔥 *Economia:* <span class="desconto">R$ ${economia.toFixed(2).replace('.',',')} (${descontoPercentual.toFixed(2)}% de desconto)</span>\n`;
     }
+  }
+  textoHTML += `\n👉 Link do produto: ${link}\n\nAproveite agora! 🚀`;
 
-    function copiarTexto() {
-      const texto = document.getElementById('sugestao').textContent;
-      navigator.clipboard.writeText(texto).then(() => {
-        alert('Texto copiado com sucesso!');
-      });
-    }
+  sugestao.style.display='block';
+  sugestao.innerHTML = textoHTML;
+  const preview = sugestao.querySelector('.mini-preview');
+  setTimeout(()=>{ preview.classList.add('show'); sugestao.classList.add('show'); },50);
 
-    function enviarParaGrupo() {
-      const texto = document.getElementById('sugestao').textContent;
-      if (!texto) {
-        alert('Gere o texto antes de compartilhar no WhatsApp!');
-        return;
-      }
+  salvarProduto(titulo, link, imagem);
 
-      navigator.clipboard.writeText(texto).then(() => {
-        alert('Texto copiado! Agora cole no grupo do WhatsApp.');
-        window.open("https://chat.whatsapp.com/LW63AlLmDFtKdZDWFJUGBn", "_blank");
-      });
-    }
+  document.getElementById('tituloProduto').value='';
+  document.getElementById('linkAfiliado').value='';
+  document.getElementById('idProduto').value='';
+  document.getElementById('cupomDesconto').value='';
+  document.getElementById('precoAtual').value='';
+  document.getElementById('precoAnterior').value='';
+}
 
-    function salvarProduto(titulo, link, imagem) {
-      const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
-      produtos.unshift({ titulo, link, imagem });
-      localStorage.setItem('produtos', JSON.stringify(produtos.slice(0, 5)));
-      mostrarProdutos();
-    }
+function copiarTexto(){
+  const temp = document.createElement("div");
+  temp.innerHTML = document.getElementById('sugestao').innerHTML.replace(/<[^>]+>/g,'');
+  navigator.clipboard.writeText(temp.textContent).then(()=>{ alert('Texto copiado com sucesso!'); });
+}
 
-    function mostrarProdutos() {
-      const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
-      const lista = document.getElementById('listaProdutos');
-      const box = document.getElementById('produtosLista');
+function compartilharWhatsApp(){
+  const temp = document.createElement("div");
+  temp.innerHTML = document.getElementById('sugestao').innerHTML.replace(/<[^>]+>/g,'');
+  const texto = temp.textContent;
+  window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`,'_blank');
+}
 
-      if (!produtos.length) {
-        box.style.display = 'none';
-        return;
-      }
+function salvarProduto(titulo, link, imagem){
+  const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+  produtos.unshift({titulo,link,imagem});
+  localStorage.setItem('produtos', JSON.stringify(produtos.slice(0,5)));
+  mostrarProdutos();
+}
 
-      lista.innerHTML = '';
-      produtos.forEach(p => {
-        const item = document.createElement('div');
-        item.className = 'produto-item';
+function criarFlipNumber(container, target){
+  container.innerHTML = '';
+  const digits = target.toString().split('');
+  digits.forEach((d,i)=>{
+    const span = document.createElement('span');
+    span.className='flip-number';
+    span.innerHTML = `<span class="flip-number-inner"><span class="flip-number-front">0</span><span class="flip-number-back">${d}</span></span>`;
+    container.appendChild(span);
+    setTimeout(()=>{ 
+      span.querySelector('.flip-number-inner').style.transform='rotateX(-180deg)'; 
+    }, i*200);
+  });
+}
 
-        const imagem = document.createElement('img');
-        imagem.src = p.imagem || 'https://via.placeholder.com/100?text=Produto';
+function mostrarProdutos(){
+  const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+  const lista = document.getElementById('listaProdutos');
+  const box = document.getElementById('produtosLista');
+  const flipContainer = document.getElementById('flipContainer');
+  if(!produtos.length){ box.style.display='none'; return; }
 
-        const info = document.createElement('div');
-        info.className = 'produto-info';
-        info.innerHTML = `<strong>${p.titulo}</strong><br><a href="${p.link}" target="_blank">${p.link}</a>`;
+  criarFlipNumber(flipContainer, produtos.length);
 
-        item.appendChild(imagem);
-        item.appendChild(info);
-        lista.appendChild(item);
-      });
+  lista.innerHTML='';
+  produtos.forEach((p,index)=>{
+    const item=document.createElement('div');
+    item.className='produto-item';
+    const img=document.createElement('img');
+    img.src=p.imagem||'https://via.placeholder.com/100?text=Produto';
+    const info=document.createElement('div');
+    info.className='produto-info';
+    info.innerHTML=`<strong>${p.titulo}</strong><br><a href="${p.link}" target="_blank">${p.link}</a>`;
+    item.appendChild(img);
+    item.appendChild(info);
+    lista.appendChild(item);
+    setTimeout(()=>{ item.classList.add('show'); },index*150);
+  });
 
-      box.style.display = 'block';
-    }
+  box.style.display='block';
+}
 
-    mostrarProdutos();
+mostrarProdutos();
 
-    document.getElementById('linkAfiliado').addEventListener('blur', function () {
-      const link = this.value;
-      const idExtraido = link.match(/MLB\d{9}/i);
-      if (idExtraido) {
-        document.getElementById('idProduto').value = idExtraido[0];
-      }
-    });
-  </script>
+document.getElementById('linkAfiliado').addEventListener('blur',function(){
+  const link=this.value;
+  const idExtraido=link.match(/MLB\d{9}/i);
+  if(idExtraido){ document.getElementById('idProduto').value=idExtraido[0]; }
+});
+</script>
 </body>
 </html>
