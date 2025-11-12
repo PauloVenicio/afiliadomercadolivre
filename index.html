@@ -19,7 +19,9 @@ header p { color:#374151; margin:5px 0 0; }
 
 /* Card Principal */
 .card { max-width:700px; margin:0 auto; background:#fff; border-radius:16px; padding:24px; box-shadow:0 10px 20px rgba(0,0,0,0.1); }
-.input-group { margin-bottom:16px; }
+/* --- CORREÇÃO AQUI: Margem reduzida de 16px para 8px --- */
+.input-group { margin-bottom:8px; } 
+
 input { 
     width:100%; padding:14px; border:1px solid #d1d5db; border-radius:8px; font-size:1rem; 
     transition: border-color 0.3s;
@@ -37,7 +39,6 @@ button:hover { background-color:#eab308; }
 button:active { transform: scale(0.98); }
 .btn-limpar { background-color:#d946ef !important; color:white !important; }
 .btn-limpar:hover { background-color:#c026d3 !important; }
-.btn-group { justify-content: center; }
 
 /* Resultado/Sugestão */
 .result { 
@@ -59,7 +60,6 @@ button:active { transform: scale(0.98); }
     display:flex; align-items:center; gap:12px; margin-bottom:12px; 
     border-bottom:1px dashed #ccc; padding-bottom:12px; text-decoration:none; 
     color:inherit; 
-    /* Remove a animação do mini-preview dentro do resultado para a nova formatação */
     opacity:1; transform:translateY(0);
 }
 .mini-preview-title { font-weight:700; color:#1e3a8a; flex:1; word-wrap:break-word; }
@@ -101,7 +101,7 @@ button:active { transform: scale(0.98); }
 <body>
 <header>
   <img src="img/1712155869572-desktophome-mainslider.webp" alt="Logo Mercado Livre">
-  <h1>AFILIADOS - MERCADO LIVRE - MARANHÃO</h1>
+  <h1>GRUPO - AFILIADOS MERCADO LIVRE - MARANHÃO</h1>
   <p>Divulgação inteligente dos seus links de afiliado</p>
 </header>
 
@@ -144,11 +144,10 @@ function gerarTexto() {
 
   let textoHTML = '';
 
-  // 1. Título do Produto (para a cópia de texto)
+    // 1. Título do Produto (Usado como <strong> para o WhatsApp e para o texto de cópia)
   textoHTML += `<strong>${titulo}</strong>\n\n`; 
-
-  // 2. Mini Preview (para a visualização na tela)
-  // O preview não precisa mais ser animado individualmente
+    
+    // 2. Mini Preview (Elemento visual na tela, mas será ignorado na cópia)
   textoHTML += `<a href="${link}" target="_blank" class="mini-preview"><img src="${imagem}" alt="${titulo}"><div class="mini-preview-title">${titulo}</div></a>\n`; 
 
   // 3. Cupom (fica abaixo do título/preview)
@@ -182,11 +181,17 @@ function gerarTexto() {
 
 function copiarTexto(){
   const temp = document.createElement("div");
-  // Substitui a tag <strong> pelo asterisco para formatar o título no WhatsApp
+  
   let htmlContent = document.getElementById('sugestao').innerHTML;
-  htmlContent = htmlContent.replace(/<strong>/g, '*').replace(/<\/strong>/g, '*');
+  
+  // Remove a primeira linha com o título (que agora está envolvido em <strong>)
+  htmlContent = htmlContent.replace(/<strong>(.*?)<\/strong>\n\n/, '*$1*\n\n'); 
+  
+  // Remove o bloco do mini-preview completamente na hora de copiar, pois ele contém o link visual
+  htmlContent = htmlContent.replace(/<a href=".*?" target="_blank" class="mini-preview">.*?<\/a>\n/, '');
+  
   temp.innerHTML = htmlContent.replace(/<[^>]+>/g,'');
-  const textoPuro = temp.textContent;
+  const textoPuro = temp.textContent.trim(); 
   
   navigator.clipboard.writeText(textoPuro).then(()=>{ 
     alert('Texto copiado com sucesso! Você pode colá-lo onde quiser.'); 
@@ -198,11 +203,17 @@ function copiarTexto(){
 
 function compartilharWhatsApp(){
   const temp = document.createElement("div");
-  // Substitui a tag <strong> pelo asterisco para formatar o título no WhatsApp
-  let htmlContent = document.getElementById('sugestao').innerHTML;
-  htmlContent = htmlContent.replace(/<strong>/g, '*').replace(/<\/strong>/g, '*');
+  
+  let htmlContent = document.getElementById('sugestao').innerHTML;
+  
+  // Remove a primeira linha com o título (que agora está envolvido em <strong>)
+  htmlContent = htmlContent.replace(/<strong>(.*?)<\/strong>\n\n/, '*$1*\n\n'); 
+  
+  // Remove o bloco do mini-preview completamente na hora de copiar
+  htmlContent = htmlContent.replace(/<a href=".*?" target="_blank" class="mini-preview">.*?<\/a>\n/, '');
+
   temp.innerHTML = htmlContent.replace(/<[^>]+>/g,'');
-  const texto = temp.textContent;
+  const texto = temp.textContent.trim();
   
   window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`,'_blank');
 }
