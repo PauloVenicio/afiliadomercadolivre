@@ -71,7 +71,7 @@ button:active { transform: scale(0.98); }
 }
 .result.show { opacity:1; transform:translateY(0); }
 
-/* Mini Preview */
+/* Mini Preview (Mantenho a classe, mas não será usada na cópia) */
 .mini-preview { 
     display:flex; align-items:center; gap:12px; margin-bottom:12px; 
     border-bottom:1px dashed #ccc; padding-bottom:12px; text-decoration:none; 
@@ -94,7 +94,6 @@ button:active { transform: scale(0.98); }
 </head>
 <body>
 
-<!-- Barra de Data e Hora Neon -->
 <div id="barraHora"></div>
 
 <header>
@@ -137,7 +136,7 @@ function atualizarHora() {
 setInterval(atualizarHora,1000);
 atualizarHora();
 
-// Restante do código de geração e cópia de texto...
+// CORREÇÃO: Função para gerar texto puro e copiar sem quebrar os ícones.
 function gerarTexto() {
   const titulo = document.getElementById('tituloProduto').value.trim();
   const link = document.getElementById('linkAfiliado').value.trim();
@@ -149,11 +148,16 @@ function gerarTexto() {
 
   if(!titulo || !link || !idProduto){ alert('Preencha o título, link e ID do produto.'); return; }
 
-  const imagem = `https://http2.mlstatic.com/D_NQ_NP_${idProduto}-O.webp`; 
+  //const imagem = `https://http2.mlstatic.com/D_NQ_NP_${idProduto}-O.webp`; // Não será usada no texto copiado
 
   let textoHTML = '';
-  textoHTML += `<strong>${titulo}</strong>\n\n`; 
-  textoHTML += `<a href="${link}" target="_blank" class="mini-preview"><img src="${imagem}" alt="${titulo}"><div class="mini-preview-title">${titulo}</div></a>\n`; 
+  // Usando asteriscos (*) para simular negrito no texto copiado (WhatsApp/Instagram)
+  textoHTML += `*${titulo}*\n\n`; 
+
+  // O mini-preview HTML foi removido para garantir a cópia de texto puro.
+  // Se você deseja um visual na página, pode adicionar uma tag <div> simples, 
+  // mas ela será ignorada na cópia de texto.
+
   if(cupom){ 
     textoHTML += `🎟️ Cupom: *${cupom}*\n🟢 Aproveita esse cupom, ele acabará rápido!\n\n`; 
   } else{ 
@@ -171,15 +175,34 @@ function gerarTexto() {
   textoHTML += `\n👉 Link do produto: ${link}\n\nAproveite agora! 🚀`;
 
   sugestao.style.display='block';
+  // O innerHTML contém o texto e os emojis.
   sugestao.innerHTML = textoHTML;
   setTimeout(()=>{ sugestao.classList.add('show'); },50);
 }
 
-// Funções de copiar, compartilhar e limpar permanecem iguais
-function copiarTexto() { const texto = document.getElementById('sugestao').textContent; navigator.clipboard.writeText(texto); alert('Texto copiado!'); }
-function compartilharWhatsApp() { const texto = document.getElementById('sugestao').textContent; window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`,'_blank'); }
-function limparFormulario() { document.getElementById('tituloProduto').value=''; document.getElementById('linkAfiliado').value=''; document.getElementById('idProduto').value=''; document.getElementById('cupomDesconto').value=''; document.getElementById('precoAtual').value=''; document.getElementById('precoAnterior').value=''; document.getElementById('sugestao').classList.remove('show'); setTimeout(()=>{document.getElementById('sugestao').style.display='none';},500); }
+// Funções de copiar, compartilhar e limpar
+function copiarTexto() { 
+    // .textContent garante que apenas o texto puro (com emojis) seja copiado
+    const texto = document.getElementById('sugestao').textContent; 
+    navigator.clipboard.writeText(texto); 
+    alert('Texto copiado!'); 
+}
+function compartilharWhatsApp() { 
+    const texto = document.getElementById('sugestao').textContent; 
+    window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`,'_blank'); 
+}
+function limparFormulario() { 
+    document.getElementById('tituloProduto').value=''; 
+    document.getElementById('linkAfiliado').value=''; 
+    document.getElementById('idProduto').value=''; 
+    document.getElementById('cupomDesconto').value=''; 
+    document.getElementById('precoAtual').value=''; 
+    document.getElementById('precoAnterior').value=''; 
+    document.getElementById('sugestao').classList.remove('show'); 
+    setTimeout(()=>{document.getElementById('sugestao').style.display='none';},500); 
+}
 
+// Listener para extrair ID automaticamente
 document.getElementById('linkAfiliado').addEventListener('blur',function(){
   const link=this.value; 
   let idExtraido = link.match(/MLB\d{9}/i); 
@@ -189,4 +212,3 @@ document.getElementById('linkAfiliado').addEventListener('blur',function(){
 </script>
 </body>
 </html>
-
