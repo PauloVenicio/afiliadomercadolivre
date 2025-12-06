@@ -71,14 +71,61 @@ button:active { transform: scale(0.98); }
 }
 .result.show { opacity:1; transform:translateY(0); }
 
-/* Mini Preview (Mantenho a classe, mas não será usada na cópia) */
-.mini-preview { 
-    display:flex; align-items:center; gap:12px; margin-bottom:12px; 
-    border-bottom:1px dashed #ccc; padding-bottom:12px; text-decoration:none; 
-    color:inherit; 
-    opacity:1; transform:translateY(0);
+/* Caixa de aviso */
+#caixaAviso {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  width: 90%;
+  max-width: 350px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.25);
+  z-index: 10000;
+  display: none;
+  animation: fadeIn 0.4s ease;
 }
-.mini-preview-title { font-weight:700; color:#1e3a8a; flex:1; word-wrap:break-word; }
+
+#caixaAviso h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  color: #1e3a8a;
+}
+
+#caixaAviso input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+#fecharAviso {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #555;
+}
+
+#botaoSalvarNome {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  background: #facc15;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -55%); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
 
 /* Media Queries */
 @media (max-width:480px){
@@ -86,15 +133,21 @@ button:active { transform: scale(0.98); }
   input{font-size:0.95rem; padding:12px;}
   .btn-group{flex-direction:column; gap:8px;}
   button{width:100%; flex:none;}
-  .produto-item, .mini-preview { flex-direction:column; align-items:flex-start; }
-  .produto-item img, .mini-preview img { width:100%; height:auto; }
-  .produto-info, .mini-preview-title { width:100%; min-width:auto; }
 }
 </style>
 </head>
 <body>
 
 <div id="barraHora"></div>
+
+<!-- CAIXA DE AVISO -->
+<div id="caixaAviso">
+  <span id="fecharAviso">✖</span>
+  <h2>Bem-vindo!</h2>
+  <p>Qual é o seu nome?</p>
+  <input type="text" id="nomeUsuario" placeholder="Digite seu nome">
+  <button id="botaoSalvarNome">Salvar</button>
+</div>
 
 <header>
   <img src="img/1712155869572-desktophome-mainslider.webp" alt="Logo Mercado Livre">
@@ -136,7 +189,48 @@ function atualizarHora() {
 setInterval(atualizarHora,1000);
 atualizarHora();
 
-// CORREÇÃO: Função para gerar texto puro e copiar sem quebrar os ícones.
+/* ----------- SISTEMA DE NOME + SAUDAÇÃO ----------- */
+
+function obterSaudacao() {
+  const hora = new Date().getHours();
+  if (hora < 12) return "Bom dia";
+  if (hora < 18) return "Boa tarde";
+  return "Boa noite";
+}
+
+function iniciarAviso() {
+  const nomeSalvo = localStorage.getItem("nomeVisitante");
+  const caixa = document.getElementById("caixaAviso");
+
+  if (!nomeSalvo) {
+    caixa.style.display = "block";
+  } else {
+    const saudacao = obterSaudacao();
+    alert(`${saudacao}, ${nomeSalvo}!`);
+  }
+}
+
+document.getElementById("botaoSalvarNome").addEventListener("click", () => {
+  const nome = document.getElementById("nomeUsuario").value.trim();
+  if (nome.length < 2) {
+    alert("Digite um nome válido.");
+    return;
+  }
+  localStorage.setItem("nomeVisitante", nome);
+  document.getElementById("caixaAviso").style.display = "none";
+
+  const saudacao = obterSaudacao();
+  alert(`${saudacao}, ${nome}!`);
+});
+
+document.getElementById("fecharAviso").addEventListener("click", () => {
+  document.getElementById("caixaAviso").style.display = "none";
+});
+
+window.onload = iniciarAviso;
+
+/* ----------- RESTANTE DO SEU SCRIPT ----------- */
+
 function gerarTexto() {
   const titulo = document.getElementById('tituloProduto').value.trim();
   const link = document.getElementById('linkAfiliado').value.trim();
@@ -146,71 +240,66 @@ function gerarTexto() {
   const precoAnterior = parseFloat(document.getElementById('precoAnterior').value);
   const sugestao = document.getElementById('sugestao');
 
-  if(!titulo || !link || !idProduto){ alert('Preencha o título, link e ID do produto.'); return; }
+  if(!titulo || !link || !idProduto){ alert('Preencha o título, link e ID.'); return; }
 
-  //const imagem = `https://http2.mlstatic.com/D_NQ_NP_${idProduto}-O.webp`; // Não será usada no texto copiado
-
-  let textoHTML = '';
-  // Usando asteriscos (*) para simular negrito no texto copiado (WhatsApp/Instagram)
-  textoHTML += `*${titulo}*\n\n`; 
-
-  // O mini-preview HTML foi removido para garantir a cópia de texto puro.
-  // Se você deseja um visual na página, pode adicionar uma tag <div> simples, 
-  // mas ela será ignorada na cópia de texto.
+  let textoHTML = `*${titulo}*\n\n`;
 
   if(cupom){ 
     textoHTML += `🎟️ Cupom: *${cupom}*\n🟢 Aproveita esse cupom, ele acabará rápido!\n\n`; 
-  } else{ 
+  } else { 
     textoHTML += `🟡 No momento não tem cupom.\n\n`; 
   }
+
   if(!isNaN(precoAtual) && precoAtual>0){
     textoHTML += `💰 *Preço atual:* R$ ${precoAtual.toFixed(2).replace('.',',')}\n`;
+    
     if(!isNaN(precoAnterior) && precoAnterior>precoAtual){
       const economia = precoAnterior - precoAtual;
       const descontoPercentual = (economia/precoAnterior)*100;
       textoHTML += `📉 *Preço anterior:* R$ ${precoAnterior.toFixed(2).replace('.',',')}\n`;
-      textoHTML += `🔥 *Economia:* R$ ${economia.toFixed(2).replace('.',',')} (${descontoPercentual.toFixed(2)}% de desconto)\n`;
+      textoHTML += `🔥 *Economia:* R$ ${economia.toFixed(2).replace('.',',')} (${descontoPercentual.toFixed(2)}%)\n`;
     }
   }
+
   textoHTML += `\n👉 Link do produto: ${link}\n\nAproveite agora! 🚀`;
 
   sugestao.style.display='block';
-  // O innerHTML contém o texto e os emojis.
   sugestao.innerHTML = textoHTML;
   setTimeout(()=>{ sugestao.classList.add('show'); },50);
 }
 
-// Funções de copiar, compartilhar e limpar
 function copiarTexto() { 
-    // .textContent garante que apenas o texto puro (com emojis) seja copiado
-    const texto = document.getElementById('sugestao').textContent; 
-    navigator.clipboard.writeText(texto); 
-    alert('Texto copiado!'); 
-}
-function compartilharWhatsApp() { 
-    const texto = document.getElementById('sugestao').textContent; 
-    window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`,'_blank'); 
-}
-function limparFormulario() { 
-    document.getElementById('tituloProduto').value=''; 
-    document.getElementById('linkAfiliado').value=''; 
-    document.getElementById('idProduto').value=''; 
-    document.getElementById('cupomDesconto').value=''; 
-    document.getElementById('precoAtual').value=''; 
-    document.getElementById('precoAnterior').value=''; 
-    document.getElementById('sugestao').classList.remove('show'); 
-    setTimeout(()=>{document.getElementById('sugestao').style.display='none';},500); 
+  const texto = document.getElementById('sugestao').textContent; 
+  navigator.clipboard.writeText(texto); 
+  alert('Texto copiado!'); 
 }
 
-// Listener para extrair ID automaticamente
+function compartilharWhatsApp() { 
+  const texto = document.getElementById('sugestao').textContent; 
+  window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`,'_blank'); 
+}
+
+function limparFormulario() { 
+  document.getElementById('tituloProduto').value=''; 
+  document.getElementById('linkAfiliado').value=''; 
+  document.getElementById('idProduto').value=''; 
+  document.getElementById('cupomDesconto').value=''; 
+  document.getElementById('precoAtual').value=''; 
+  document.getElementById('precoAnterior').value=''; 
+  document.getElementById('sugestao').classList.remove('show'); 
+  setTimeout(()=>{document.getElementById('sugestao').style.display='none';},500); 
+}
+
 document.getElementById('linkAfiliado').addEventListener('blur',function(){
   const link=this.value; 
   let idExtraido = link.match(/MLB\d{9}/i); 
   if(!idExtraido){ idExtraido = link.match(/\d{10}/); }
-  if(idExtraido){ const finalId = idExtraido[0].startsWith('MLB') ? idExtraido[0].toUpperCase() : 'MLB'+idExtraido[0]; document.getElementById('idProduto').value=finalId; }
+  if(idExtraido){ 
+    const finalId = idExtraido[0].startsWith('MLB') ? idExtraido[0].toUpperCase() : 'MLB'+idExtraido[0]; 
+    document.getElementById('idProduto').value=finalId; 
+  }
 });
 </script>
+
 </body>
 </html>
-
-
