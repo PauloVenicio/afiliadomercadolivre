@@ -4,13 +4,19 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>#AFILIADOS MERCADO LIVRE - MARANHÃO</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-/* Estilos Gerais e Reset */
-* { box-sizing: border-box; font-family: 'Inter', sans-serif; }
-body { margin:0; background:#fefce8; color:#1f2937; padding:20px; }
 
-/* Barra de Data e Hora Neon */
+<style>
+* { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { 
+    margin: 0; 
+    background: #fefce8; 
+    color: #1f2937; 
+    padding: 20px 20px 80px 20px; 
+}
+
+/* Barra neon */
 #barraHora {
   position: fixed;
   top: 0;
@@ -34,113 +40,140 @@ body { margin:0; background:#fefce8; color:#1f2937; padding:20px; }
 }
 
 /* Cabeçalho */
-header { text-align:center; margin:50px 0 30px 0; }
-header img { max-width:100%; height:auto; margin-bottom:10px; border-radius:10px; }
-header h1 { font-size:1.8rem; color:#1e3a8a; margin:0; font-weight:700; }
-header p { color:#374151; margin:5px 0 0; }
+header { text-align:center; margin:60px 0 30px 0; }
+header img { max-width:100%; border-radius:10px; }
+header h1 { font-size:1.8rem; color:#1e3a8a; margin:10px 0 0; }
+header p { color:#374151; margin-top:5px; }
 
-/* Card Principal */
-.card { max-width:700px; margin:0 auto; background:#fff; border-radius:16px; padding:24px; box-shadow:0 10px 20px rgba(0,0,0,0.1); }
-.input-group { margin-bottom:8px; } 
+/* Card */
+.card { 
+  max-width:700px; 
+  margin:0 auto; 
+  background:#fff; 
+  border-radius:16px; 
+  padding:24px; 
+  box-shadow:0 10px 20px rgba(0,0,0,0.1); 
+}
+.input-group { margin-bottom:10px; }
 
 input { 
-    width:100%; padding:14px; border:1px solid #d1d5db; border-radius:8px; font-size:1rem; 
-    transition: border-color 0.3s;
+  width:100%; padding:14px; border:1px solid #d1d5db; border-radius:8px; 
+  transition:border-color .3s;
 }
-input:focus { border-color: #facc15; outline: none; }
+input:focus { border-color:#facc15; outline:none; }
 
 /* Botões */
 .btn-group { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
 button { 
-    background-color:#facc15; color:#000; padding:12px 20px; font-size:1rem; 
-    border:none; border-radius:8px; cursor:pointer; font-weight:600; 
-    transition:background 0.3s, transform 0.1s; flex:1 1 150px; 
+  flex:1 1 150px;
+  background:#facc15; 
+  padding:12px; 
+  border:none;
+  border-radius:8px; 
+  font-weight:600;
+  cursor:pointer;
+  transition:background .3s, transform .1s;
 }
-button:hover { background-color:#eab308; }
-button:active { transform: scale(0.98); }
-.btn-limpar { background-color:#d946ef !important; color:white !important; }
-.btn-limpar:hover { background-color:#c026d3 !important; }
+button:hover { background:#eab308; }
+button:active { transform:scale(.97); }
+.btn-limpar { background:#d946ef !important; color:white !important; }
+.btn-limpar:hover { background:#c026d3 !important; }
 
-/* Resultado/Sugestão */
+/* Resultado */
 .result { 
-    background:#f3f4f6; margin-top:20px; padding:16px; border-radius:10px; 
-    white-space:pre-line; border-left:5px solid #1e3a8a; 
-    opacity:0; transform:translateY(20px); 
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    word-break: break-word; 
+  background:#f3f4f6; 
+  margin-top:20px; 
+  padding:16px; 
+  border-radius:10px; 
+  white-space:pre-line; 
+  border-left:5px solid #1e3a8a; 
+  opacity:0; 
+  transform:translateY(20px); 
+  transition:opacity 0.5s, transform 0.5s; 
+  word-break:break-word;
+  display:none;
 }
 .result.show { opacity:1; transform:translateY(0); }
 
 /* Caixa de aviso */
 #caixaAviso {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #ffffff;
-  width: 90%;
-  max-width: 350px;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.25);
-  z-index: 10000;
-  display: none;
-  animation: fadeIn 0.4s ease;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -55%);
+  background:#fff;
+  width:90%;
+  max-width:350px;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 20px rgba(0,0,0,0.25);
+  z-index:10000;
+  display:none;
+  animation:fadeIn .4s ease;
 }
-
-#caixaAviso h2 {
-  margin-top: 0;
-  font-size: 1.3rem;
-  color: #1e3a8a;
-}
-
-#caixaAviso input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
+#caixaAviso h2 { margin-top:0; color:#1e3a8a; }
 #fecharAviso {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  cursor: pointer;
-  font-size: 20px;
-  color: #555;
+  position:absolute; top:10px; right:14px;
+  font-size:20px;
+  cursor:pointer;
+  color:#555;
 }
-
 #botaoSalvarNome {
-  margin-top: 12px;
-  width: 100%;
-  padding: 12px;
-  background: #facc15;
-  border: none;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
+  width:100%; margin-top:12px; padding:12px;
+  background:#facc15; border:none; font-weight:bold;
+  border-radius:8px; cursor:pointer;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translate(-50%, -55%); }
-  to   { opacity: 1; transform: translate(-50%, -50%); }
+  from { opacity:0; transform:translate(-50%, -60%); }
+  to { opacity:1; transform:translate(-50%, -55%); }
 }
 
-/* Media Queries */
+/* Rodapé fixo */
+.footer-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  min-height: 60px;
+  background: #1f2937;
+  color: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.footer-icon a {
+  color:white;
+  font-size:1.6rem;
+  text-decoration:none;
+  transition:transform .2s;
+}
+.footer-icon a:hover {
+  transform:scale(1.1);
+  color:#facc15;
+}
+.icon-whatsapp { color:#25D366; }
+.icon-instagram { color:#E4405F; }
+.icon-youtube { color:#FF0000; }
+.icon-mercadolivre { color:#FFE600; }
+
 @media (max-width:480px){
   header h1{font-size:1.5rem;}
-  input{font-size:0.95rem; padding:12px;}
-  .btn-group{flex-direction:column; gap:8px;}
   button{width:100%; flex:none;}
 }
 </style>
 </head>
+
 <body>
 
 <div id="barraHora"></div>
 
-<!-- CAIXA DE AVISO -->
+<!-- Caixa de aviso -->
 <div id="caixaAviso">
   <span id="fecharAviso">✖</span>
   <h2>Bem-vindo!</h2>
@@ -150,7 +183,7 @@ button:active { transform: scale(0.98); }
 </div>
 
 <header>
-  <img src="img/1712155869572-desktophome-mainslider.webp" alt="Logo Mercado Livre">
+  <img src="img/1712155869572-desktophome-mainslider.webp" alt="Banner">
   <h1>Natal e Ano Novo 2025  #BORA #FAZER $$$</h1>
   <p>Divulgação inteligente dos seus links de afiliado</p>
 </header>
@@ -160,7 +193,7 @@ button:active { transform: scale(0.98); }
   <div class="input-group"><input type="text" id="linkAfiliado" placeholder="Link de afiliado do Mercado Livre"></div>
   <div class="input-group"><input type="text" id="idProduto" placeholder="ID do produto (ex: MLB123456789)"></div>
   <div class="input-group"><input type="text" id="cupomDesconto" placeholder="Cupom de desconto (opcional)"></div>
-  <div class="input-group"><input type="number" id="precoAtual" placeholder="Preço atual (ex: 1899.90)"></div>
+  <div class="input-group"><input type="number" id="precoAtual" placeholder="Preço atual"></div>
   <div class="input-group"><input type="number" id="precoAnterior" placeholder="Preço anterior (opcional)"></div>
 
   <div class="btn-group">
@@ -170,133 +203,123 @@ button:active { transform: scale(0.98); }
     <button onclick="limparFormulario()" class="btn-limpar">🧹 Limpar</button>
   </div>
 
-  <div id="sugestao" class="result" style="display:none;"></div>
+  <div id="sugestao" class="result"></div>
 </div>
 
+<footer class="footer-nav">
+  <div class="footer-icon"><a href="https://chat.whatsapp.com/LW63AlLmDFtKdZDWFJUGBn" target="_blank"><i class="fab fa-whatsapp icon-whatsapp"></i></a></div>
+  <div class="footer-icon"><a href="https://www.instagram.com/paulovenicio/" target="_blank"><i class="fab fa-instagram icon-instagram"></i></a></div>
+  <div class="footer-icon"><a href="https://www.youtube.com/@CarvalhoMTV" target="_blank"><i class="fab fa-youtube icon-youtube"></i></a></div>
+  <div class="footer-icon"><a href="https://mercadolivre.com/sec/28yZeye" target="_blank"><i class="fas fa-shopping-cart icon-mercadolivre"></i></a></div>
+</footer>
+
 <script>
-// Atualiza hora e data a cada segundo
-function atualizarHora() {
-  const barra = document.getElementById('barraHora');
+/* Barra de data/hora */
+function atualizarHora(){
+  const barra = document.getElementById("barraHora");
   const agora = new Date();
-  const dia = String(agora.getDate()).padStart(2,'0');
-  const mes = String(agora.getMonth()+1).padStart(2,'0');
-  const ano = agora.getFullYear();
-  const horas = String(agora.getHours()).padStart(2,'0');
-  const minutos = String(agora.getMinutes()).padStart(2,'0');
-  const segundos = String(agora.getSeconds()).padStart(2,'0');
-  barra.textContent = `🕒 ${dia}/${mes}/${ano} - ${horas}:${minutos}:${segundos}`;
+  const formato = agora.toLocaleDateString("pt-BR");
+  const hora = agora.toLocaleTimeString("pt-BR");
+  barra.textContent = `🕒 ${formato} - ${hora}`;
 }
 setInterval(atualizarHora,1000);
 atualizarHora();
 
-/* ----------- SISTEMA DE NOME + SAUDAÇÃO ----------- */
-
-function obterSaudacao() {
-  const hora = new Date().getHours();
-  if (hora < 12) return "Bom dia";
-  if (hora < 18) return "Boa tarde";
+/* Saudação */
+function obterSaudacao(){
+  const h = new Date().getHours();
+  if(h < 12) return "Bom dia";
+  if(h < 18) return "Boa tarde";
   return "Boa noite";
 }
 
-function iniciarAviso() {
-  const nomeSalvo = localStorage.getItem("nomeVisitante");
-  const caixa = document.getElementById("caixaAviso");
-
-  if (!nomeSalvo) {
-    caixa.style.display = "block";
+function iniciarAviso(){
+  const nome = localStorage.getItem("nomeVisitante");
+  if(!nome){
+    document.getElementById("caixaAviso").style.display = "block";
   } else {
-    const saudacao = obterSaudacao();
-    alert(`${saudacao}, ${nomeSalvo}!`);
+    alert(`${obterSaudacao()}, ${nome}!`);
   }
 }
 
-document.getElementById("botaoSalvarNome").addEventListener("click", () => {
+document.getElementById("botaoSalvarNome").onclick = () => {
   const nome = document.getElementById("nomeUsuario").value.trim();
-  if (nome.length < 2) {
-    alert("Digite um nome válido.");
-    return;
-  }
+  if(nome.length < 2){ alert("Digite um nome válido."); return; }
   localStorage.setItem("nomeVisitante", nome);
   document.getElementById("caixaAviso").style.display = "none";
+  alert(`${obterSaudacao()}, ${nome}!`);
+};
 
-  const saudacao = obterSaudacao();
-  alert(`${saudacao}, ${nome}!`);
-});
-
-document.getElementById("fecharAviso").addEventListener("click", () => {
+document.getElementById("fecharAviso").onclick = () => {
   document.getElementById("caixaAviso").style.display = "none";
-});
+};
 
 window.onload = iniciarAviso;
 
-/* ----------- RESTANTE DO SEU SCRIPT ----------- */
+/* Gerador de texto */
+function gerarTexto(){
+  const titulo = tituloProduto.value.trim();
+  const link = linkAfiliado.value.trim();
+  const id = idProduto.value.trim();
+  const cupom = cupomDesconto.value.trim();
+  const atual = parseFloat(precoAtual.value);
+  const anterior = parseFloat(precoAnterior.value);
+  const saida = document.getElementById("sugestao");
 
-function gerarTexto() {
-  const titulo = document.getElementById('tituloProduto').value.trim();
-  const link = document.getElementById('linkAfiliado').value.trim();
-  const idProduto = document.getElementById('idProduto').value.trim().toUpperCase();
-  const cupom = document.getElementById('cupomDesconto').value.trim();
-  const precoAtual = parseFloat(document.getElementById('precoAtual').value);
-  const precoAnterior = parseFloat(document.getElementById('precoAnterior').value);
-  const sugestao = document.getElementById('sugestao');
+  if(!titulo || !link || !id){ alert("Preencha título, link e ID."); return; }
 
-  if(!titulo || !link || !idProduto){ alert('Preencha o título, link e ID.'); return; }
+  let texto = `*${titulo}*\n\n`;
 
-  let textoHTML = `*${titulo}*\n\n`;
+  if(cupom){
+    texto += `🎟️ Cupom: *${cupom}*\n🟢 Aproveita esse cupom, ele acabará rápido!\n\n`;
+  } else texto += `🟡 No momento não tem cupom.\n\n`;
 
-  if(cupom){ 
-    textoHTML += `🎟️ Cupom: *${cupom}*\n🟢 Aproveita esse cupom, ele acabará rápido!\n\n`; 
-  } else { 
-    textoHTML += `🟡 No momento não tem cupom.\n\n`; 
-  }
+  if(!isNaN(atual) && atual > 0){
+    texto += `💰 *Preço atual:* R$ ${atual.toFixed(2).replace('.',',')}\n`;
 
-  if(!isNaN(precoAtual) && precoAtual>0){
-    textoHTML += `💰 *Preço atual:* R$ ${precoAtual.toFixed(2).replace('.',',')}\n`;
-    
-    if(!isNaN(precoAnterior) && precoAnterior>precoAtual){
-      const economia = precoAnterior - precoAtual;
-      const descontoPercentual = (economia/precoAnterior)*100;
-      textoHTML += `📉 *Preço anterior:* R$ ${precoAnterior.toFixed(2).replace('.',',')}\n`;
-      textoHTML += `🔥 *Economia:* R$ ${economia.toFixed(2).replace('.',',')} (${descontoPercentual.toFixed(2)}%)\n`;
+    if(!isNaN(anterior) && anterior > atual){
+      const econ = anterior - atual;
+      const perc = (econ / anterior) * 100;
+      texto += `📉 *Preço anterior:* R$ ${anterior.toFixed(2).replace('.',',')}\n`;
+      texto += `🔥 *Economia:* R$ ${econ.toFixed(2).replace('.',',')} (${perc.toFixed(2)}%)\n`;
     }
   }
 
-  textoHTML += `\n👉 Link do produto: ${link}\n\nAproveite agora! 🚀`;
+  texto += `\n👉 Link do produto: ${link}\n\nAproveite agora! 🚀`;
 
-  sugestao.style.display='block';
-  sugestao.innerHTML = textoHTML;
-  setTimeout(()=>{ sugestao.classList.add('show'); },50);
+  saida.innerText = texto;
+  saida.style.display = "block";
+  setTimeout(()=>saida.classList.add("show"),50);
 }
 
-function copiarTexto() { 
-  const texto = document.getElementById('sugestao').textContent; 
-  navigator.clipboard.writeText(texto); 
-  alert('Texto copiado!'); 
+function copiarTexto(){
+  navigator.clipboard.writeText(sugestao.innerText);
+  alert("Texto copiado!");
 }
 
-function compartilharWhatsApp() { 
-  const texto = document.getElementById('sugestao').textContent; 
-  window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`,'_blank'); 
+function compartilharWhatsApp(){
+  window.open(`https://wa.me/?text=${encodeURIComponent(sugestao.innerText)}`, "_blank");
 }
 
-function limparFormulario() { 
-  document.getElementById('tituloProduto').value=''; 
-  document.getElementById('linkAfiliado').value=''; 
-  document.getElementById('idProduto').value=''; 
-  document.getElementById('cupomDesconto').value=''; 
-  document.getElementById('precoAtual').value=''; 
-  document.getElementById('precoAnterior').value=''; 
-  document.getElementById('sugestao').classList.remove('show'); 
-  setTimeout(()=>{document.getElementById('sugestao').style.display='none';},500); 
+function limparFormulario(){
+  tituloProduto.value="";
+  linkAfiliado.value="";
+  idProduto.value="";
+  cupomDesconto.value="";
+  precoAtual.value="";
+  precoAnterior.value="";
+  sugestao.classList.remove("show");
+  setTimeout(()=>sugestao.style.display="none",500);
 }
 
-document.getElementById('linkAfiliado').addEventListener('blur',function(){
-  const link=this.value; 
-  let idExtraido = link.match(/MLB\d{9}/i); 
-  if(!idExtraido){ idExtraido = link.match(/\d{10}/); }
-  if(idExtraido){ 
-    const finalId = idExtraido[0].startsWith('MLB') ? idExtraido[0].toUpperCase() : 'MLB'+idExtraido[0]; 
-    document.getElementById('idProduto').value=finalId; 
+linkAfiliado.addEventListener("blur", () => {
+  const link = linkAfiliado.value;
+  let id = link.match(/MLB\d{9}/i);
+  if(!id) id = link.match(/\d{10}/);
+  if(id){
+    let finalId = id[0];
+    if(!finalId.startsWith("MLB")) finalId = "MLB" + finalId;
+    idProduto.value = finalId.toUpperCase();
   }
 });
 </script>
