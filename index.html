@@ -42,12 +42,22 @@ header p { color:#374151; margin-top:5px; }
 input { width:100%; padding:14px; border:1px solid #d1d5db; border-radius:8px; }
 input:focus { border-color:#facc15; outline:none; }
 
-/* Botões */
-.btn-group { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-button { flex:1 1 150px; background:#facc15; padding:12px; border:none;
-  border-radius:8px; font-weight:600; cursor:pointer; }
+/* Botões originais */
+.btn-group { display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+button { background:#facc15; padding:12px; border:none;
+  border-radius:8px; font-weight:600; cursor:pointer; width:100%; }
 button:hover { background:#eab308; }
 .btn-limpar { background:#d946ef !important; color:white !important; }
+
+/* NOVO LAYOUT DE BOTÕES */
+.btn-duplo {
+  display:flex;
+  gap:10px;
+  width:100%;
+}
+.btn-duplo button {
+  flex:1;
+}
 
 /* Resultado */
 .result {
@@ -140,12 +150,12 @@ button:hover { background:#eab308; }
     <span id="fecharAssistente">✖</span>
     <h3>🤖 Bot Assistente</h3>
     <p>Olá! Quer ajuda para usar a página?</p>  
-        <p>➤ Preencha o título do produto</p>
-        <p>➤ Cole seu link de afiliado</p>
-        <p>➤ Digite o ID do Produto.</p>
-        <p>➤ Digite o Cupom de Desconto. (caso tenha algum)</p>
-        <p>➤ Digite o Valor do Produto...   (atual e anterior)</p>
-        <p>➤ Use os botões abaixo para gerar, copiar ou enviar no WhatsApp!</p>
+    <p>➤ Preencha o título do produto</p>
+    <p>➤ Cole seu link de afiliado</p>
+    <p>➤ Digite o ID do Produto.</p>
+    <p>➤ Digite o Cupom de Desconto. (caso tenha algum)</p>
+    <p>➤ Digite o Valor do Produto...   (atual e anterior)</p>
+    <p>➤ Use os botões abaixo para gerar, copiar ou enviar no WhatsApp!</p>
 </div>
 
 <header>
@@ -155,6 +165,7 @@ button:hover { background:#eab308; }
 </header>
 
 <div class="card">
+
   <div class="input-group"><input type="text" id="tituloProduto" placeholder="Título do Produto"></div>
   <div class="input-group"><input type="text" id="linkAfiliado" placeholder="Link de afiliado do Mercado Livre"></div>
   <div class="input-group"><input type="text" id="idProduto" placeholder="ID do produto (ex: MLB123456789)"></div>
@@ -162,10 +173,15 @@ button:hover { background:#eab308; }
   <div class="input-group"><input type="number" id="precoAtual" placeholder="Preço atual"></div>
   <div class="input-group"><input type="number" id="precoAnterior" placeholder="Preço anterior (opcional)"></div>
 
+  <!-- BOTÕES AJUSTADOS -->
   <div class="btn-group">
-    <button onclick="gerarTexto()">🚀 Gerar texto</button>
-    <button onclick="copiarTexto()">📋 Copiar texto</button>
-    <button onclick="compartilharWhatsApp()">💬 WhatsApp</button>
+    <button onclick="gerarTexto()">🚀 Gerar texto #1</button>
+
+    <div class="btn-duplo">
+      <button onclick="copiarTexto()">📋 Copiar texto #2</button>
+      <button onclick="compartilharWhatsApp()">💬 WhatsApp #3</button>
+    </div>
+
     <button onclick="limparFormulario()" class="btn-limpar">🧹 Limpar</button>
   </div>
 
