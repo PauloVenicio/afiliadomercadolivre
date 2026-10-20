@@ -152,7 +152,6 @@ button:hover { background:#eab308; }
     <p>Olá! Quer ajuda para usar a página?</p>  
     <p>➤ Preencha o título do produto</p>
     <p>➤ Cole seu link de afiliado</p>
-    <p>➤ O ID do produto é opcional.</p>
     <p>➤ Digite o Cupom de Desconto. (caso tenha algum)</p>
     <p>➤ Digite o Valor do Produto...   (atual e anterior)</p>
     <p>➤ Use os botões abaixo para gerar, copiar ou enviar no WhatsApp!</p>
@@ -168,7 +167,6 @@ button:hover { background:#eab308; }
 
   <div class="input-group"><input type="text" id="tituloProduto" placeholder="Título do Produto"></div>
   <div class="input-group"><input type="text" id="linkAfiliado" placeholder="Link de afiliado do Mercado Livre"></div>
-  <div class="input-group"><input type="text" id="idProduto" placeholder="ID do produto (opcional, ex: MLB123456789)"></div>
   <div class="input-group"><input type="text" id="cupomDesconto" placeholder="Cupom de desconto (opcional)"></div>
   <div class="input-group"><input type="number" min="0" step="0.01" id="precoAtual" placeholder="Preço atual"></div>
   <div class="input-group"><input type="number" min="0" step="0.01" id="precoAnterior" placeholder="Preço anterior (opcional)"></div>
@@ -318,25 +316,12 @@ function compartilharWhatsApp(){
 function limparFormulario(){
   tituloProduto.value="";
   linkAfiliado.value="";
-  idProduto.value="";
   cupomDesconto.value="";
   precoAtual.value="";
   precoAnterior.value="";
   sugestao.classList.remove("show");
   setTimeout(()=>sugestao.style.display="none",500);
 }
-
-/* Detectar ID automaticamente */
-linkAfiliado.addEventListener("blur", () => {
-  const link = linkAfiliado.value;
-  let id = link.match(/MLB\d{9}/i);
-  if(!id) id = link.match(/\d{10}/);
-  if(id){
-    let finalId = id[0];
-    if(!finalId.startsWith("MLB")) finalId = "MLB" + finalId;
-    idProduto.value = finalId.toUpperCase();
-  }
-});
 
 /* ASSISTENTE IA */
 document.getElementById("botAssistente").onclick = () => {
