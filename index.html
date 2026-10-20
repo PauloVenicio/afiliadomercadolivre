@@ -152,7 +152,7 @@ button:hover { background:#eab308; }
     <p>Olá! Quer ajuda para usar a página?</p>  
     <p>➤ Preencha o título do produto</p>
     <p>➤ Cole seu link de afiliado</p>
-    <p>➤ Digite o ID do Produto.</p>
+    <p>➤ O ID do produto é opcional.</p>
     <p>➤ Digite o Cupom de Desconto. (caso tenha algum)</p>
     <p>➤ Digite o Valor do Produto...   (atual e anterior)</p>
     <p>➤ Use os botões abaixo para gerar, copiar ou enviar no WhatsApp!</p>
@@ -168,10 +168,10 @@ button:hover { background:#eab308; }
 
   <div class="input-group"><input type="text" id="tituloProduto" placeholder="Título do Produto"></div>
   <div class="input-group"><input type="text" id="linkAfiliado" placeholder="Link de afiliado do Mercado Livre"></div>
-  <div class="input-group"><input type="text" id="idProduto" placeholder="ID do produto (ex: MLB123456789)"></div>
+  <div class="input-group"><input type="text" id="idProduto" placeholder="ID do produto (opcional, ex: MLB123456789)"></div>
   <div class="input-group"><input type="text" id="cupomDesconto" placeholder="Cupom de desconto (opcional)"></div>
-  <div class="input-group"><input type="number" id="precoAtual" placeholder="Preço atual"></div>
-  <div class="input-group"><input type="number" id="precoAnterior" placeholder="Preço anterior (opcional)"></div>
+  <div class="input-group"><input type="number" min="0" step="0.01" id="precoAtual" placeholder="Preço atual"></div>
+  <div class="input-group"><input type="number" min="0" step="0.01" id="precoAnterior" placeholder="Preço anterior (opcional)"></div>
 
   <!-- BOTÕES AJUSTADOS -->
   <div class="btn-group">
@@ -264,45 +264,56 @@ window.onload = iniciarAviso;
 
 /* Gerador de texto */
 function gerarTexto(){
-  const titulo = tituloProduto.value.trim();
-  const link = linkAfiliado.value.trim();
-  const id = idProduto.value.trim();
-  const cupom = cupomDesconto.value.trim();
-  const atual = parseFloat(precoAtual.value);
-  const anterior = parseFloat(precoAnterior.value);
+  const titulo = document.getElementById("tituloProduto").value.trim();
+  const link = document.getElementById("linkAfiliado").value.trim();
+  const cupom = document.getElementById("cupomDesconto").value.trim();
+  const atual = Number(document.getElementById("precoAtual").value);
+  const anterior = Number(document.getElementById("precoAnterior").value);
   const saida = document.getElementById("sugestao");
 
-  if(!titulo || !link || !id){ alert("Preencha título, link e ID."); return; }
-
-  let texto = `*${titulo}*\n\n`;
-
-  if(cupom){
-    texto += `🎟️ Cupom: *${cupom}*\n🟢 Aproveita esse cupom, ele acabará rápido!\n\n`;
-  } else texto += `🟡 No momento não tem cupom.\n\n`;
-
-  if(!isNaN(atual) && atual > 0){
-    texto += `💰 *Preço atual:* R$ ${atual.toFixed(2).replace('.',',')}\n`;
-    if(!isNaN(anterior) && anterior > atual){
-      const econ = anterior - atual;
-      const perc = (econ / anterior) * 100;
-      texto += `📉 *Preço anterior:* R$ ${anterior.toFixed(2).replace('.',',')}\n`;
-      texto += `🔥 *Economia:* R$ ${econ.toFixed(2).replace('.',',')} (${perc.toFixed(2)}%)\n`;
-    }
+  if(!titulo || !link || !Number.isFinite(atual) || atual <= 0){
+    alert("Preencha o título, o link e um preço atual válido.");
+    return false;
+  }
+  try {
+    const url = new URL(link);
+    if(!["https:", "http:"].includes(url.protocol)) throw new Error("Link inválido");
+  } catch {
+    alert("Digite um link válido começando com https:// ou http://.");
+    return false;
   }
 
-  texto += `\n👉 Link do produto: ${link}\n\nAproveite agora! 🚀`;
+  const moeda = valor => valor.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2, maximumFractionDigits: 2
+  });
+  let texto = titulo + "\n\n";
+  if(Number.isFinite(anterior) && anterior > atual){
+    texto += "De: ~R$ " + moeda(anterior) + "~\n";
+  }
+  texto += "💥 *Por: R$ " + moeda(atual) + "*\n\n";
+  if(cupom){
+    texto += "🎟️ Use o cupom: *" + cupom + "*\n\n";
+  }
+  texto += "Compre aqui 👇🏻\n" + link;
 
   saida.innerText = texto;
   saida.style.display = "block";
   setTimeout(()=>saida.classList.add("show"),50);
+  return true;
 }
 
-function copiarTexto(){
-  navigator.clipboard.writeText(sugestao.innerText);
-  alert("Texto copiado!");
+async function copiarTexto(){
+  if(!gerarTexto()) return;
+  try {
+    await navigator.clipboard.writeText(document.getElementById("sugestao").innerText);
+    alert("Texto copiado!");
+  } catch {
+    alert("Não foi possível copiar automaticamente. Selecione e copie o texto gerado.");
+  }
 }
 function compartilharWhatsApp(){
-  window.open(`https://wa.me/?text=${encodeURIComponent(sugestao.innerText)}`, "_blank");
+  if(!gerarTexto()) return;
+  window.open("https://wa.me/?text=" + encodeURIComponent(document.getElementById("sugestao").innerText), "_blank", "noopener");
 }
 function limparFormulario(){
   tituloProduto.value="";
